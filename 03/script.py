@@ -4,7 +4,7 @@ total_joltage = 0
 with open("input.txt") as new_file:
     
     for line in new_file:
-        last_action_was_on_1 = False
+        last_num_was_highest = False
         result_list = [0, 0, 0]
         line = line.replace("\n", "")
         
@@ -12,19 +12,19 @@ with open("input.txt") as new_file:
             
             # handle the last action            
             if c == len(line) -1:
-                if last_action_was_on_1 == True:
+                if last_num_was_highest == True:
                     result_list[1] = result_list[0]
                     result_list[0] = result_list[2]
                 continue
             
             # if the previous action moved index 1 to 0, force the current number to index 1
-            if last_action_was_on_1 == True:
+            if last_num_was_highest == True:
                 result_list[1] = int(c)
-                last_action_was_on_1 = False
+                last_num_was_highest = False
                 continue
              
             # reset last action flag
-            last_action_was_on_1 = False
+            last_num_was_highest = False
             
             # set index 1 if num is higher
             if int(c) > result_list[1]:
@@ -34,7 +34,7 @@ with open("input.txt") as new_file:
             if result_list[1] > result_list[0]:
                 result_list[2] = result_list[0]
                 result_list[0] = result_list[1]
-                last_action_was_on_1 = True
+                last_num_was_highest = True
                 
             # print(result_list, end=", ")
         
