@@ -1,7 +1,4 @@
-fresh_ingredient = []
-
-
-def parse_file():
+def parse_file_1():
     # with open("test.txt") as new_file:
     with open("input.txt") as new_file:
         
@@ -35,9 +32,41 @@ def count_fresh_ingredients(data):
                 break
     
     return result
+
+def parse_file_2():
+    with open("test.txt") as new_file:
+    # with open("input.txt") as new_file:
+
+        ordered_ranges_strings = []
+    
+        for line in new_file:
+            
+            if line == "\n":
+                break
+            
+            line = line.replace("\n", "")
+            line_split = line.split("-")
+            ordered_ranges_strings.append([int(line_split[0]), int(line_split[1])])
+            
+        ordered_ranges_strings.sort()
+        
+        print(ordered_ranges_strings)
+        
+            
+def compare_next_range(data, next_entry):
+    pass            
+            
+def count_fresh_ingredients_2(data):   
+    
+    updated_data = []
+    for index, el in enumerate(data):
+        updated_data = compare_next_range()
             
 # data = (ranges, ingredients)
-data = parse_file()
-# print(data)
-result = count_fresh_ingredients(data)
-print(f'Fresh Ingredients: {result}')
+# data = parse_file_1()
+# result = count_fresh_ingredients(data)
+# print(f'Fresh Ingredients: {result}')
+
+data2 = parse_file_2()
+result2 = count_fresh_ingredients_2(data2)
+# print(data[0])
