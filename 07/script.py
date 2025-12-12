@@ -1,20 +1,34 @@
 
 def count_splits(filename):  
+    splitter_char = "^"
     splits = 0
     with open(filename) as new_file:       
-        first_split_found = False 
-        for line in new_file:
-            splits_on_this_line = 0
-            for ch in line:                    
-                if ch == "^":
-                    splits_on_this_line += 1
+        splits = 0
+        beams = []
+        for i_line, line in enumerate(new_file):
             
-            if splits_on_this_line > 0:
-                if first_split_found == False:
-                    first_split_found = True
-                else:
-                    splits += splits_on_this_line
-    
+            splits_in_this_line = 0
+            
+            # initialize beams list
+            if i_line == 0:
+                beams = [False] * len(line)
+                for i_char, ch in enumerate(line):
+                    if ch == "S":
+                        beams[i_char] = True
+                        break
+                continue
+            
+            # handle splits and beams    
+            for i_char, ch in enumerate(line):
+                if ch == splitter_char:
+                    if beams[i_char] == True:
+                        beams[i_char] = False
+                        beams[i_char-1] = True
+                        beams[i_char+1] = True
+                        splits_in_this_line += 1
+                        
+            splits += splits_in_this_line
+                    
     return splits
             
 
