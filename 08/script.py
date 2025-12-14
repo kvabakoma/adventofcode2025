@@ -5,9 +5,7 @@ distances = []
 circuits = []
 
 def calculate_distance(a, b):
-    # distance = math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2)
-    distance = sum((a[k]-b[k])** 2 for k in range(3))
-    print("calculate_distance:", a, b, distance)
+    distance = math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2)
     return distance
 
 def parse_data_file(datafile):
@@ -22,24 +20,25 @@ def parse_data_file(datafile):
 
 
 def calculate_distances_between_points(junction_boxes):
-    print(f'junction_boxes: {junction_boxes}')
-    res = []
-    for i_a, el_a in enumerate(junction_boxes):
-        for i_b, el_b in enumerate(junction_boxes[i_a+1:]):
-            print("calling calc data: ", calculate_distance(el_a, el_b), i_a, i_b, el_a, el_b)
-            res.append((calculate_distance(el_a, el_b), i_a, i_b, el_a, el_b)) 
+    results = []
+    for i in range(len(junction_boxes)):
+        for j in range(i + 1, len(junction_boxes)):
+            results.append([junction_boxes[i], junction_boxes[j], calculate_distance(junction_boxes[i], junction_boxes[j])])
+            
+    return results
+    # res = []
+    # for i_a, el_a in enumerate(junction_boxes):
+    #     for i_b, el_b in enumerate(junction_boxes[i_a+1:]):
+    #         res.append((calculate_distance(el_a, el_b), i_a, i_b, el_a, el_b)) 
 
-    return sorted(res)
+    # return sorted(res)
 
 
 def calculate_shortest_circuits(data, iterations):
-    # init the 
-    
 
     result = [[data[0][1], data[0][2]]]
     for i in range(0, iterations):       
         flat_data = [x for sublist in result for x in sublist]
-        print(f'i: {i}, data[i]: {data[i]}')
         if data[i][1] in flat_data:
             if data[i][2] in flat_data:
                 # both already in the list - skip
@@ -77,8 +76,23 @@ distances = calculate_distances_between_points(junction_boxes)
 circuits = calculate_shortest_circuits(distances, 10)
 result = calculate_circuitss_product(circuits)
 # print(junction_boxes)
-# print(distances)
-print(circuits)
-print(f'final size of curcits: {result}')
+print(distances)
+# print(circuits)
+# print(f'final size of curcits: {result}')
 
 # {\displaystyle d(p,q)={\sqrt {(p_{1}-q_{1})^{2}+(p_{2}-q_{2})^{2}+(p_{3}-q_{3})^{2}}}.}
+
+
+# get all junctions
+# calculate the distances between each junction pair
+# find the 10 shortest distances (pair of juncions?)
+# start creating circuits
+    # manually add the first 2 juncs
+    # on each consecutive pair check:
+        # if none are present so far -> create a new circuit with both of them
+        # if one is present, add the second one to the existing circuit
+        # if both are present
+            # if present in different circuits - combine both circuits
+            # if present in the same - ignore
+            
+            
