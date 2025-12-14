@@ -5,8 +5,9 @@ distances = []
 circuits = []
 
 def calculate_distance(a, b):
-    distance = math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2)
-    # print("calculate_distance:", a, b, distance)
+    # distance = math.sqrt((a[0]-b[0])**2 + (a[1]-b[1])**2 + (a[2]-b[2])**2)
+    distance = sum((a[k]-b[k])** 2 for k in range(3))
+    print("calculate_distance:", a, b, distance)
     return distance
 
 def parse_data_file(datafile):
@@ -25,9 +26,9 @@ def calculate_distances_between_points(junction_boxes):
     res = []
     for i_a, el_a in enumerate(junction_boxes):
         for i_b, el_b in enumerate(junction_boxes[i_a+1:]):
-            print(f'el_a: {el_a}, el_b: {el_b}, distance: {calculate_distance(el_a, el_b)}')
+            print("calling calc data: ", calculate_distance(el_a, el_b), i_a, i_b, el_a, el_b)
             res.append((calculate_distance(el_a, el_b), i_a, i_b, el_a, el_b)) 
-    # results = [(calculate_distance(a, b), i_a, i_b, a, b) for i_a, a in enumerate(junction_boxes) for i_b, b in enumerate(junction_boxes[i_a+1:])]
+
     return sorted(res)
 
 
